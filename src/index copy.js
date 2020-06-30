@@ -4,6 +4,16 @@ import './index.css';
 import {createStore} from 'redux';
 // import * as serviceWorker from './serviceWorker';
 
+/**
+ *  步骤：1.写reducer方法(state,action)
+ *        2.创建store（通过createStore）
+ *        3.写方法（调用dispatch(action)）
+ *        4.写显示界面
+ *        5.监听变化，重新渲染(store.subscribe)
+ * 
+ */       
+
+
 //用于操作状态的仓库，通过动作操作state
 const reducer = function(state={num:10},action){
   switch (action.type) {
