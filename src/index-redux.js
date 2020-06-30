@@ -10,7 +10,6 @@ import {createStore} from 'redux';
  *        3.写方法（调用dispatch(action)）
  *        4.写显示界面
  *        5.监听变化，重新渲染(store.subscribe)
- * 
  */       
 
 
