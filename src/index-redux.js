@@ -33,13 +33,13 @@ const store = createStore(reducer)
 
 //调用dispatch执行,传入对应的action.type，指明执行的方法
 function add(){
-  //通过仓库的方法dispath进行修改数据
+  //通过仓库的方法dispatch进行修改数据
   store.dispatch({type:'add'})
   console.log(store.getState())
 }
 //调用dispatch执行,传入对应的action.type，指明执行的方法
 function decr(){
-  //通过仓库的方法dispath进行修改数据
+  //通过仓库的方法dispatch进行修改数据
   store.dispatch({type:'decr'})
   console.log(store.getState())
 }
