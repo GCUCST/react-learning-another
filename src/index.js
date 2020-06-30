@@ -2,62 +2,66 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import {createStore} from 'redux';
-// import * as serviceWorker from './serviceWorker';
+import {Provider,connect} from 'react-redux'
 
-//用于操作状态的仓库，通过动作操作state
-const reducer = function(state={num:10},action){
+class Counter extends React.Component{
+    render(){
+      const value = this.props.value;
+      const onAddClick = this.props.onAddClick;
+      return(
+        <div>
+          <h1>计数的数量：{value}</h1>
+          <button onClick = {onAddClick}>加一</button>
+        </div>
+      )
+    }
+}
+
+function reducer(state={num:0},action){
   switch (action.type) {
     case "add":
        state.num+=1;
        break;
-    case "decr":
-         state.num-=1;
-         break;
     default:
       console.log("找不到对应的action.type")
     }
-    return {...state}; //相当于复制得到一个新的state
+    return {...state};
 }
 
-//创建store对象，关联对应仓库
-const store = createStore(reducer)
+const store = createStore(reducer);
 
-//调用dispatch执行,传入对应的action.type，指明执行的方法
-function add(){
-  //通过仓库的方法dispath进行修改数据
-  store.dispatch({type:'add'})
-  console.log(store.getState())
-}
-//调用dispatch执行,传入对应的action.type，指明执行的方法
-function decr(){
-  //通过仓库的方法dispath进行修改数据
-  store.dispatch({type:'decr'})
-  console.log(store.getState())
+//将state映射对应的props函数
+function mapStateToProps(state){
+  return {
+    value : state.num
+  }
 }
 
-//显示界面
-const Counter = function(props){
-  let state = store.getState()
-  return (
-    <div className="index">
-      <h1 >值：{state.num}</h1>
-      <button onClick={add}>加一</button>&nbsp;&nbsp;&nbsp;
-      <button onClick={decr}>减一</button>
-    </div>
-  )
+
+const addAction = {
+  type:'add'
+}
+//将修改state数据方法映射到props
+function mapDispatchToProps(dispatch){
+  return {
+    onAddClick:()=>{
+      dispatch(addAction)
+    }
+  }
 }
 
-//监听变化，重新渲染
-store.subscribe(()=>{
-  ReactDOM.render(
-    <Counter />,
-     document.getElementById('root')
-   );
-})
+
+
+//关联 方法和组件
+const App = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Counter)
 
 ReactDOM.render(
- <Counter />,
-  document.getElementById('root')
+  <Provider store = {store}>
+    <App />
+  </Provider>
+  ,
+   document.getElementById('root')
 );
-
-// serviceWorker.unregister();
